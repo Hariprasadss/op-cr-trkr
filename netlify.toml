@@ -1,0 +1,12 @@
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Friendly path -> serverless function
+[[redirects]]
+  from = "/api/credits"
+  to = "/.netlify/functions/credits"
+  status = 200
