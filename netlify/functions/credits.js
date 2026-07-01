@@ -71,6 +71,18 @@ const PROVIDERS = {
     const d = await r.json();
     return { credits: d.total, detail: "Remaining credits" };
   },
+
+  zerobounce: async () => {
+    const key = process.env.ZEROBOUNCE_API_KEY;
+    if (!key) throw new Error("Missing ZEROBOUNCE_API_KEY");
+    const r = await fetch(`https://api.zerobounce.net/v2/getcredits?api_key=${encodeURIComponent(key)}`);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const d = await r.json();
+    const credits = Number(d.Credits);
+    // ZeroBounce returns "-1" for an invalid key / error state.
+    if (!Number.isFinite(credits) || credits < 0) throw new Error("Invalid API key");
+    return { credits, detail: "Email validation credits" };
+  },
 };
 
 const META = {
@@ -79,6 +91,7 @@ const META = {
   bounceban: { name: "BounceBan", color: "#f59e0b" },
   discolike: { name: "DiscoLike", color: "#ec4899" },
   aiark: { name: "AI Ark", color: "#22c55e" },
+  zerobounce: { name: "ZeroBounce", color: "#a855f7" },
 };
 
 exports.handler = async () => {
