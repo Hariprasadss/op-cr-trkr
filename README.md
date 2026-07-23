@@ -1,6 +1,6 @@
 # Credit Monitor
 
-A dashboard that tracks remaining API credits across **LeadMagic**, **Icypeas**, **BounceBan**, **DiscoLike**, **AI Ark** and **ZeroBounce**. Built to deploy on **Netlify** (static page + one serverless function). API keys stay server-side in environment variables — they are never sent to the browser.
+A dashboard that tracks remaining API credits across **LeadMagic**, **Icypeas**, **BounceBan**, **DiscoLike**, **AI Ark**, **ZeroBounce** and **MillionVerifier**. Built to deploy on **Netlify** (static page + one serverless function). API keys stay server-side in environment variables — they are never sent to the browser.
 
 The balance-check endpoints used here are free and do **not** consume credits.
 
@@ -17,6 +17,7 @@ The balance-check endpoints used here are free and do **not** consume credits.
 | DiscoLike | `GET https://api.discolike.com/v1/usage`                   | `x-discolike-key` header      |
 | AI Ark    | `GET https://api.ai-ark.com/api/developer-portal/v1/payments/credits` | `X-TOKEN` header   |
 | ZeroBounce | `GET https://api.zerobounce.net/v2/getcredits?api_key=<key>`         | API key in query string |
+| MillionVerifier | `GET https://api.millionverifier.com/api/v3/credits?api=<key>`  | API key in query string |
 
 > DiscoLike credits are denominated in spend (USD), so its card shows remaining **budget** (`$` available − used) and is excluded from the headline credits total.
 
@@ -41,6 +42,7 @@ netlify dev                   # serves the site + functions at http://localhost:
    - `DISCOLIKE_API_KEY`
    - `AIARK_API_KEY`
    - `ZEROBOUNCE_API_KEY`
+   - `MILLIONVERIFIER_API_KEY`
 4. Deploy. The dashboard is the site root; the function is at `/api/credits`.
 
 Or from the CLI: `netlify deploy --prod` (set the same env vars with `netlify env:set NAME value`).

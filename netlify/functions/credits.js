@@ -83,6 +83,16 @@ const PROVIDERS = {
     if (!Number.isFinite(credits) || credits < 0) throw new Error("Invalid API key");
     return { credits, detail: "Email validation credits" };
   },
+
+  millionverifier: async () => {
+    const key = process.env.MILLIONVERIFIER_API_KEY;
+    if (!key) throw new Error("Missing MILLIONVERIFIER_API_KEY");
+    const r = await fetch(`https://api.millionverifier.com/api/v3/credits?api=${encodeURIComponent(key)}`);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const d = await r.json();
+    if (d.error) throw new Error(String(d.error));
+    return { credits: d.credits, detail: "Email verification credits" };
+  },
 };
 
 const META = {
@@ -92,6 +102,7 @@ const META = {
   discolike: { name: "DiscoLike", color: "#ec4899" },
   aiark: { name: "AI Ark", color: "#22c55e" },
   zerobounce: { name: "ZeroBounce", color: "#a855f7" },
+  millionverifier: { name: "MillionVerifier", color: "#14b8a6" },
 };
 
 exports.handler = async () => {
